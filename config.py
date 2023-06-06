@@ -61,5 +61,9 @@ class myLogger:
             f"{bcolors.BOLD if bold else ''}{bcolors.FAIL}{msg}{bcolors.ENDC if bold else ''}{bcolors.ENDC}"
         )
 
+    def divider(self, num=50):
+        self.logger.info(
+            f"{bcolors.BOLD}{'=' * num}{bcolors.ENDC}"
+        )
 
 __all__ = ["myLogger", "stopwords", "bcolors"]
