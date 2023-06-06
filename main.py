@@ -43,6 +43,18 @@ def find_top_k_words(file_path, k):
 
 
 if __name__ == "__main__":
+    # Get CPU information
+    cpu_info = psutil.cpu_freq()
+    # Get CPU core count
+    cpu_count = psutil.cpu_count(logical=False)
+    logger.header("CPU Core Count:", cpu_count)
+    logger.header("CPU Frequency: {:.2f} MHz".format(cpu_info.current))
+
+    # Get memory information
+    mem_info = psutil.virtual_memory()
+    logger.header("Total Memory: {:.2f} GB".format(mem_info.total / (1024 ** 3)))
+    logger.header("Available Memory: {:.2f} GB".format(mem_info.available / (1024 ** 3)))
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--file", type=str, required=True)
     parser.add_argument("--topk", type=int, required=False, default=10)
