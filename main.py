@@ -39,10 +39,7 @@ def find_top_k_words(file_path, k):
     # Find the top k words
     top_k_words = heapq.nlargest(k, word_count.keys(), key=word_count.get)
 
-    word_count_sort = sorted(word_count.items(), key=lambda i: i[1] * -1)
-    logger.info(word_count_sort[:k], bold=True)
-
-    return top_k_words
+    return top_k_words, word_count
 
 
 if __name__ == "__main__":
@@ -61,7 +58,7 @@ if __name__ == "__main__":
     current_process = psutil.Process()
     cpu_usage_before = current_process.cpu_percent(interval=None)
 
-    top_k_words = find_top_k_words(args.file, args.topk)
+    top_k_words, word_count = find_top_k_words(args.file, args.topk)
 
     end_time = time.time()
     mem_usage_after = memory_usage(-1, interval=0.1, timeout=1)[0]
@@ -71,3 +68,6 @@ if __name__ == "__main__":
     logger.header(f"Execution time: {end_time - start_time} seconds")
     logger.header(f"Memory used: {mem_usage_after - mem_usage_before} MiB")
     logger.header(f"CPU usage: {cpu_usage_after - cpu_usage_before} %")
+    logger.divider()
+    word_count_sort = sorted(word_count.items(), key=lambda i: i[1] * -1)
+    logger.info(word_count_sort[:args.topk], bold=True)
